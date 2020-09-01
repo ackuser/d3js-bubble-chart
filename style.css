@@ -3,7 +3,7 @@ h1, h2 {
 }
 
 .bubbles {
-  stroke-width: 1px;
+  stroke-width: .5px;
   stroke: black;
   opacity: .8
 }
