@@ -1,0 +1,8 @@
+{
+  "name": "js-cvoifh",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "d3": "^6.1.1"
+  }
+}
