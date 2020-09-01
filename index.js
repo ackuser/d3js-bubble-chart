@@ -1,33 +1,14 @@
-// Import stylesheets
-import "./style.css";
-
 import * as d3 from "d3";
 
 const dataset = [
-  {
-    type: "Sample 1",
-    value: 50,
-    radius: 7
-  },
-  {
-    type: "Sample 2",
-    value: 30,
-    radius: 11
-  },
-  {
-    type: "Sample 3",
-    value: 10,
-    radius: 3
-  }
+  { type: "Sample 1", value: 50, radius: 7 },
+  { type: "Sample 2", value: 30, radius: 11 },
+  { type: "Sample 3", value: 10, radius: 3 }
 ];
 
-const maxY = d3.max(dataset, d => d.value);
+const yMax = d3.max(dataset, d => d.value);
 const total = d3.sum(dataset, d => d.value);
-
-
 const types = dataset.map(d => d.type);
-
-console.log(maxY, total, types);
 
 const margin = { top: 40, right: 150, bottom: 60, left: 30 },
   width = 500 - margin.left - margin.right,
@@ -59,15 +40,22 @@ svg
 // Add Y axis
 const y = d3
   .scaleLinear()
-  .domain([0, maxY])
+  .domain([0, yMax + 10])
   .range([height, 0]);
-  
-svg.append("g").call(d3.axisLeft(y));
 
-//Bonus ticks
+svg.append("g").call(d3.axisLeft(y).ticks(7));
 
-// Add a scale for bubble color
-var myColor = d3
-  .scaleOrdinal()
-  .domain(keys)
-  .range(d3.schemeSet1);
+
+// Add bubbles
+svg
+  .append("g")
+  .selectAll("bubble")
+  .data(dataset)
+  .enter()
+  .append("circle")
+  .attr("cx", d => x(d.type) + 50) // 50 is offset
+  .attr("cy", d => y(d.value))
+  .attr("r", d => d.radius)
+  .style("fill", "lightcyan")
+  .style("opacity", "0.7")
+  .attr("stroke", "black");
